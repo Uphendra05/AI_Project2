@@ -30,6 +30,9 @@
 #include "Physics/SoftBody/SoftbodyMeshes.h"
 #include "Threading/ThreadManager.h"
 #include "Threading/StartThreads.h"
+#include "AI/WanderPatterns.h"
+#include "AI/CurveMovement.h"
+#include "AI/RandomWaypoints.h"
 
 
 class ApplicationRenderer
@@ -77,7 +80,9 @@ public:
 private:
 	GLFWwindow* window;
 	
-	
+	WanderPatterns* agent;
+	CurveMovement* agentTwo;
+	RandomWaypoints* agentThree;
 
 	GraphicsRender render;
 	LightManager lightManager;

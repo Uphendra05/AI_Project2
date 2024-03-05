@@ -223,7 +223,7 @@ void ApplicationRenderer::InitializeSkybox()
 void ApplicationRenderer::Start()
 {
                          
-    StartThreadForSoftBody(0.01f);
+    //StartThreadForSoftBody(0.01f);
 
 
     sceneCamera->postprocessing->InitializePostProcessing();
@@ -293,7 +293,7 @@ void ApplicationRenderer::Start()
 
    
 
-    SoftBodyObjs* softBodyTest1 = new SoftBodyObjs();
+   /* SoftBodyObjs* softBodyTest1 = new SoftBodyObjs();
     softBodyTest1->LoadModel("Models/Plane/Plane.ply");
     softBodyTest1->name = "MY PLANE";
     softBodyTest1->transform.SetPosition(glm::vec3(0, 1, 0));
@@ -303,9 +303,12 @@ void ApplicationRenderer::Start()
     softBodyTest1->InitializeSoftBody();
     softBodyTest1->AddLockSphere(0, 0.01f);
    
-    StartThreads* thread = new StartThreads();
+    StartThreads* thread = new StartThreads();*/
 
 
+    //agent = new WanderPatterns();
+    //agentTwo = new CurveMovement();
+    agentThree = new RandomWaypoints();
 
     //LightRenderer
     //LightManager::GetInstance().AddLight(directionLight);
@@ -317,7 +320,7 @@ void ApplicationRenderer::Start()
 
   //  PhysicsEngine.AddPhysicsObjects(SpherePhyiscs);
 
-    sbThread->bRun = true;
+    //sbThread->bRun = true;
    
 }
 
@@ -483,7 +486,7 @@ void ApplicationRenderer::EngineGameLoop()
 
     if (isPlayMode)
     {
-       // EntityManager::GetInstance().Update(Time::GetInstance().deltaTime);
+        EntityManager::GetInstance().Update(Time::GetInstance().deltaTime);
     }
 
     PostRender();
