@@ -21,7 +21,7 @@ public:
 
 	};
 
-	std::vector<Waypoint> waypoints = {
+	std::vector<Waypoint> listOfWaypoints = {
 	{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -90.0f, 0.0f)},  // Waypoint 0
 	{glm::vec3(10.0f, 0.0f, -10.0f), glm::vec3(0.0f, 0.0f, 0.0f)},    // Waypoint 1
 	{glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 180.0f, 0.0f)},   // Waypoint 2

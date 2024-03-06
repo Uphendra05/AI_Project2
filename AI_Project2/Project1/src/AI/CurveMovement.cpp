@@ -27,12 +27,12 @@ void CurveMovement::CalculateNextWaypoint(float deltaTime)
 {
 
 
-	if (waypointIndex < waypoints.size() - 3)
+	if (waypointIndex < listOfWaypoints.size() - 3)
 	{
-		const Waypoint& p0 = waypoints[waypointIndex];
-		const Waypoint& p1 = waypoints[waypointIndex + 1];
-		const Waypoint& p2 = waypoints[waypointIndex + 2];
-		const Waypoint& p3 = waypoints[waypointIndex + 3];
+		const Waypoint& p0 = listOfWaypoints[waypointIndex];
+		const Waypoint& p1 = listOfWaypoints[waypointIndex + 1];
+		const Waypoint& p2 = listOfWaypoints[waypointIndex + 2];
+		const Waypoint& p3 = listOfWaypoints[waypointIndex + 3];
 
 		float t = elapsedTime / curveDuration;
 		glm::vec3 curvePosition = CalculateCubicBezier(t, p0.position, p1.position, p2.position, p3.position);
@@ -45,7 +45,7 @@ void CurveMovement::CalculateNextWaypoint(float deltaTime)
 
 			waypointIndex += 3;
 
-			if (waypointIndex >= waypoints.size() - 3)
+			if (waypointIndex >= listOfWaypoints.size() - 3)
 			{
 
 				waypointIndex = 0;

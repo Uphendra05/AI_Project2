@@ -26,9 +26,9 @@ void WanderPatterns::MoveAgent(const glm::vec3& targetPosition, const glm::vec3&
 void WanderPatterns::CalculateNextWaypoint(float deltaTime)
 {
 
-	if (waypointIndex < waypoints.size())
+	if (waypointIndex < listOfWaypoints.size())
 	{
-		const Waypoint& CurWaypoint = waypoints[waypointIndex];
+		const Waypoint& CurWaypoint = listOfWaypoints[waypointIndex];
 
 		MoveAgent(CurWaypoint.position, transform.rotation, deltaTime);
 
@@ -39,7 +39,7 @@ void WanderPatterns::CalculateNextWaypoint(float deltaTime)
 
 			waypointIndex++;
 
-			if (waypointIndex == waypoints.size())
+			if (waypointIndex == listOfWaypoints.size())
 			{
 				waypointIndex = 0;
 			}

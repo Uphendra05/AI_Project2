@@ -21,12 +21,20 @@ public:
 
 	};
 
-	std::vector<Waypoint> waypoints = 
+	std::vector<Waypoint> listOfWaypoints = 
 	{
-	{glm::vec3(0.0f, 0.0f, 0.0f)     },    // Waypoint 0
-	{glm::vec3(-10.0f, 0.0f, 10.0f)  },    // Waypoint 1
-	{glm::vec3(20.0f, 0.0f, 0.0f)    },    // Waypoint 2
-	{glm::vec3(30.0f, 0.0f, 30.0f)   }     // Waypoint 3
+	{  glm::vec3(0.0f, 0.0f, 0.0f)     },    // Waypoint 0
+	{  glm::vec3(-10.0f, 0.0f, 10.0f)  },    // Waypoint 1
+	{  glm::vec3(20.0f, 0.0f, 0.0f)    },    // Waypoint 2
+	{  glm::vec3(30.0f, 0.0f, 30.0f)   },    // Waypoint 3
+	{  glm::vec3(-33.0f, 0.0f, 0.0f)    },
+	{  glm::vec3(-9.30f, 0.0f, -28.50f)    },
+	{  glm::vec3(36.2f, 0.0f, -30.0f)    },
+	{  glm::vec3(12.4f, 0.0f, -41.5f)    },
+	{  glm::vec3(-38.2f, 0.0f, -41.5f)    },
+	{  glm::vec3(-38.2f, 0.0f, 36.2f)    },
+	{  glm::vec3(-1.6f, 0.0f, 36.2f)    },
+	{  glm::vec3(13.9f, 0.0f,-35.4f)    },
 	};
 
 	void MoveAgent(const glm::vec3& targetPosition, const glm::vec3& targetRotation, float deltaTime);
@@ -43,11 +51,14 @@ public:
 
 	void RenderAlertDistance();
 	float CalculateDistance(glm::vec3& transform, glm::vec3& targetTransform);
-	
+
+	void RenderWaypoints();
+
 
 private:
 
 	Model* alertDistanceModel;
+	Model* waypointModel;
 	Camera* sceneCam;
 
 	float movementSpeed = .5f;

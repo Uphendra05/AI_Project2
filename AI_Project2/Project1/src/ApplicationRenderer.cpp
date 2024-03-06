@@ -158,7 +158,8 @@ void ApplicationRenderer::WindowInitialize(int width, int height, std::string wi
     GraphicsRender::GetInstance().SetCamera(sceneCamera);
 
     sceneCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
-    sceneCamera->transform.position = glm::vec3(0, 0, -1.0f);
+    sceneCamera->transform.position = glm::vec3(-47.35f, 22.26, 53.0f);
+    sceneCamera->transform.SetRotation(glm::vec3(-21.1, 322.8, 0));
 
     gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     gameScenecamera->transform.position = glm::vec3(0, 0, -1.0f);
@@ -241,8 +242,8 @@ void ApplicationRenderer::Start()
     directionLight->SetAttenuation(1, 1, 0.01f);
     directionLight->SetInnerAndOuterCutoffAngle(11, 12);
 
-    directionLight->transform.SetRotation(glm::vec3(0, 0, 5));
-    directionLight->transform.SetPosition(glm::vec3(0, 0, 5));
+    directionLight->transform.SetRotation(glm::vec3(64, 0, 5));
+    directionLight->transform.SetPosition(glm::vec3(0, 100, 5));
 
     Model* Floor = new Model("Models/DefaultQuad/DefaultQuad.fbx");
     Floor->transform.SetPosition(glm::vec3(0, -1.0f, 0));
@@ -504,9 +505,17 @@ void ApplicationRenderer::RenderForCamera(Camera* sceneCamera, FrameBuffer* fram
 }
 void ApplicationRenderer::GenerateWanderPatterns()
 {
-    agent = new RandomWaypoints(2, 4, 2, sceneCamera);
-    agentTwo = new RandomWaypoints(4, 1, 4, sceneCamera);
-    agentThree = new RandomWaypoints(10, 5, 10, sceneCamera);
+    agent = new RandomWaypoints(/*Patrol Speed*/ 2, /*Wait Time*/ 4, /*AlertDistance*/ 5, /*Camera reference*/ sceneCamera);
+    agent->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(1, 0, 0, 1)); //RED
+
+
+    agentTwo = new RandomWaypoints(/*Patrol Speed*/ 4, /*Wait Time*/ 1, /*AlertDistance*/ 6, /*Camera reference*/ sceneCamera);
+    agentTwo->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(0, 1, 0, 1));//GREEN
+
+
+    agentThree = new RandomWaypoints(/*Patrol Speed*/ 13, /*Wait Time*/ 5, /*AlertDistance*/ 10, /*Camera reference*/ sceneCamera);
+    agentThree->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(0, 0, 1, 1));//BLUE
+
 
     camSpeed = 125;
 

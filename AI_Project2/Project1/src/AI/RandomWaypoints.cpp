@@ -18,12 +18,15 @@ RandomWaypoints::RandomWaypoints(float patrolSpeed, float waitTime, float alertD
 	this->sceneCam = target;
 
 	LoadModel("Models/DefaultCube/DefaultCube.fbx");
-	meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(1, 0, 0, 1));
+	
 	GraphicsRender::GetInstance().AddModelAndShader(this, GraphicsRender::GetInstance().defaultShader);
 
 	alertDistanceModel = new Model("Models/DefaultSphere/DefaultSphere.fbx");
 	alertDistanceModel->meshes[0]->isWireFrame = true;
 	GraphicsRender::GetInstance().AddModelAndShader(alertDistanceModel, GraphicsRender::GetInstance().defaultShader);
+
+	
+	 //RenderWaypoints();
 }
 
 RandomWaypoints::~RandomWaypoints()
@@ -40,9 +43,9 @@ void RandomWaypoints::CalculateNextWaypoint(float deltaTime)
 {
 
 
-	if (waypointIndex < waypoints.size())
+	if (waypointIndex < listOfWaypoints.size())
 	{
-		const Waypoint& CurWaypoint = waypoints[waypointIndex];
+		const Waypoint& CurWaypoint = listOfWaypoints[waypointIndex];
 
 		MoveAgent(CurWaypoint.position, transform.rotation, deltaTime * patrolSpeed);
 
@@ -57,7 +60,7 @@ void RandomWaypoints::CalculateNextWaypoint(float deltaTime)
 			}
 			else
 			{
-				waypointIndex = std::rand() % waypoints.size();
+				waypointIndex = std::rand() % listOfWaypoints.size();
 
 				waitTime = 2.0f;
 			}
@@ -118,5 +121,18 @@ float RandomWaypoints::CalculateDistance(glm::vec3& transform, glm::vec3& target
 
 	return std::sqrt(dx * dx + dy * dy + dz * dz);
 
+
+}
+
+void RandomWaypoints::RenderWaypoints()
+{
+	for (size_t i = 0; i < listOfWaypoints.size(); i++)
+	{
+		waypointModel = new Model("Models/DefaultSphere/DefaultSphere.fbx");
+		waypointModel->name = " Waypoints";
+		waypointModel->transform.SetPosition(listOfWaypoints[i].position);
+		waypointModel->transform.SetScale(glm::vec3(0.4f));
+		GraphicsRender::GetInstance().AddModelAndShader(waypointModel, GraphicsRender::GetInstance().defaultShader);
+	}
 
 }
