@@ -23,9 +23,9 @@ public:
 
 	std::vector<Waypoint> waypoints = {
 	{glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -90.0f, 0.0f)},  // Waypoint 0
-	{glm::vec3(20.0f, -20.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)},    // Waypoint 1
+	{glm::vec3(20.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f)},    // Waypoint 1
 	{glm::vec3(40.0f, 0.0f, 0.0f), glm::vec3(0.0f, 180.0f, 0.0f)},   // Waypoint 2
-	{glm::vec3(20.0f, 20.0f, 0.0f), glm::vec3(0.0f, 90.0f, 0.0f)}    // Waypoint 3
+	{glm::vec3(20.0f, 40.0f, 0.0f), glm::vec3(0.0f, 90.0f, 0.0f)}    // Waypoint 3
 	};
 
 	void MoveAgent(const glm::vec3& targetPosition, const glm::vec3& targetRotation, float deltaTime);

@@ -157,13 +157,13 @@ void ApplicationRenderer::WindowInitialize(int width, int height, std::string wi
 
     GraphicsRender::GetInstance().SetCamera(sceneCamera);
 
-    sceneCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    sceneCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     sceneCamera->transform.position = glm::vec3(0, 0, -1.0f);
 
-    gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     gameScenecamera->transform.position = glm::vec3(0, 0, -1.0f);
 
-    renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     renderTextureCamera->transform.position = glm::vec3(5, 0, 0);
 
     renderTextureCamera->IntializeRenderTexture(specs);
@@ -222,39 +222,16 @@ void ApplicationRenderer::InitializeSkybox()
 
 void ApplicationRenderer::Start()
 {
-                         
-    //StartThreadForSoftBody(0.01f);
-
+        
 
     sceneCamera->postprocessing->InitializePostProcessing();
 
     gameScenecamera->postprocessing->InitializePostProcessing();
 
-  /*  Model* floor = new Model((char*)"Models/Floor/Floor.fbx");
-    floor->transform.SetRotation(glm::vec3(90, 0, 0));
-    floor->transform.SetPosition(glm::vec3(0, -2, 0));
-
-    Model* floor2 = new Model(*floor);
-    floor2->transform.SetRotation(glm::vec3(90, 0, 0));
-    floor2->transform.SetPosition(glm::vec3(0, 2, 0));
-
-
-    Model* floor3 = new Model(*floor);
-
-    floor3->transform.SetPosition(glm::vec3(-2, 0, 0));
-    Model* floor4 = new Model(*floor);
-    floor4->transform.SetPosition(glm::vec3(2, 0, 0));
-    floor4->meshes[0]->meshMaterial->material()->useMaskTexture = false;
-    floor4->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(1, 1, 1, 0.5f));*/
-
-
-
-
-
+  
     Model* directionLightModel = new Model("Models/DefaultSphere/Sphere_1_unit_Radius.ply", false, true);
     directionLightModel->transform.SetScale(glm::vec3(0.5f));
-    // Model* spotlight = new Model(*Sphere);
-     //spotlight->transform.SetPosition(glm::vec3(-2.0f, 0.0f, -3.0f));
+    
 
     Light* directionLight = new Light();
     directionLight->Initialize(LightType::DIRECTION_LIGHT, 1);
@@ -267,60 +244,17 @@ void ApplicationRenderer::Start()
     directionLight->transform.SetRotation(glm::vec3(0, 0, 5));
     directionLight->transform.SetPosition(glm::vec3(0, 0, 5));
 
-
-    /*Model* plant = new Model("Models/Plant.fbm/Plant.fbx");
-    Texture* plantAlphaTexture = new Texture();*/
-
-    /*Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
-    quadWithTexture->transform.SetPosition(glm::vec3(5, 0, 0));
-    quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera->renderTexture;
-
-    Model* window = new Model("Models/Window/Window.obj");
-    window->transform.SetPosition(glm::vec3(-5, 0, 0));
-    window->transform.SetRotation(glm::vec3(90, 0, 0));
-    window->meshes[0]->meshMaterial->material()->useMaskTexture = false;
-    window->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(1, 1, 1, 0.5f));*/
+    Model* Floor = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+    Floor->transform.SetPosition(glm::vec3(0, -1.0f, 0));
+    Floor->transform.SetRotation(glm::vec3(90, 0, 0));
+    Floor->transform.SetScale(glm::vec3(50));
+    GraphicsRender::GetInstance().AddModelAndShader(Floor,defaultShader);
 
 
+    GenerateWanderPatterns();
 
-    //GraphicsRender::GetInstance().AddModelAndShader(plant, alphaCutoutShader);
-    /*GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, alphaCutoutShader);
-    GraphicsRender::GetInstance().AddModelAndShader(floor, defaultShader);
-    GraphicsRender::GetInstance().AddModelAndShader(floor2, defaultShader);
-    GraphicsRender::GetInstance().AddModelAndShader(floor3, defaultShader);
-    GraphicsRender::GetInstance().AddModelAndShader(floor4, alphaBlendShader);
-    GraphicsRender::GetInstance().AddModelAndShader(window, alphaBlendShader);*/
-
+  
    
-
-   /* SoftBodyObjs* softBodyTest1 = new SoftBodyObjs();
-    softBodyTest1->LoadModel("Models/Plane/Plane.ply");
-    softBodyTest1->name = "MY PLANE";
-    softBodyTest1->transform.SetPosition(glm::vec3(0, 1, 0));
-    softBodyTest1->transform.SetScale(glm::vec3(1));
-    GraphicsRender::GetInstance().AddModelAndShader(softBodyTest1, defaultShader);
-
-    softBodyTest1->InitializeSoftBody();
-    softBodyTest1->AddLockSphere(0, 0.01f);
-   
-    StartThreads* thread = new StartThreads();*/
-
-
-    //agent = new WanderPatterns();
-    //agentTwo = new CurveMovement();
-    agentThree = new RandomWaypoints();
-
-    //LightRenderer
-    //LightManager::GetInstance().AddLight(directionLight);
-   // lightManager.AddLight(directionLight);
-  //  lightManager.AddNewLight(spot);
-  //  lightManager.SetUniforms(defaultShader->ID);
-  //  PhysicsObject* SpherePhyiscs = new PhysicsObject(Sphere);
-  //  SpherePhyiscs->Initialize(false, true, DYNAMIC);
-
-  //  PhysicsEngine.AddPhysicsObjects(SpherePhyiscs);
-
-    //sbThread->bRun = true;
    
 }
 
@@ -402,9 +336,7 @@ void ApplicationRenderer::Render()
         // scrollTime += Time::GetInstance().deltaTime;
 
        
-        //CustomThread<void(*)()> threader(EngineGameLoop);
-           //CustomThread<decltype(&ApplicationRenderer::EngineGameLoop) > gameLoopThread(&ApplicationRenderer::EngineGameLoop);
-           //gameLoopThread.StartSingleThread();
+      
 
         EngineGameLoop();
 
@@ -570,8 +502,17 @@ void ApplicationRenderer::RenderForCamera(Camera* sceneCamera, FrameBuffer* fram
     }
 
 }
-void ApplicationRenderer::PostRender()
+void ApplicationRenderer::GenerateWanderPatterns()
 {
+    agent = new RandomWaypoints(2, 4, 2, sceneCamera);
+    agentTwo = new RandomWaypoints(4, 1, 4, sceneCamera);
+    agentThree = new RandomWaypoints(10, 5, 10, sceneCamera);
+
+    camSpeed = 125;
+
+}
+void ApplicationRenderer::PostRender()
+{ 
     if (isPlayMode)
     {
         //ThreadManager::Getinstance().Update(Time::GetInstance().deltaTime);
@@ -594,7 +535,7 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
-    float cameraSpeed = 25;
+    float cameraSpeed = camSpeed;
 
     if (EditorLayout::GetInstance().isHovered())
     {

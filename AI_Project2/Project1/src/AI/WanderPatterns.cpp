@@ -69,7 +69,7 @@ void WanderPatterns::SceneDraw()
 
 void WanderPatterns::Start()
 {
-	startPos = transform.position;
+	
 }
 
 

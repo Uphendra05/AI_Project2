@@ -62,6 +62,10 @@ public:
 	void EngineGraphicsRender();
 	void EngineGameLoop();
 	void RenderForCamera(Camera* sceneCamera, FrameBuffer* framebuffer);
+
+	void GenerateWanderPatterns();
+
+	float camSpeed;
 	
 	FrameBufferSpecs specis;
 	FrameBuffer* sceneViewframeBuffer;
@@ -80,8 +84,8 @@ public:
 private:
 	GLFWwindow* window;
 	
-	WanderPatterns* agent;
-	CurveMovement* agentTwo;
+	RandomWaypoints* agent;
+	RandomWaypoints* agentTwo;
 	RandomWaypoints* agentThree;
 
 	GraphicsRender render;
